@@ -1,7 +1,4 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
@@ -85,6 +82,7 @@ def scrape_all_pages(driver, names, prices, links):
 
         old_data_length = len(names)
         scrape_data_from_page(driver.page_source, names, prices, links)
+        print(f'Products scraped : {old_data_length}')
 
         next_btn = driver.find_elements(By.CLASS_NAME , '_9QVEpD')[-1]
         time.sleep(1)
@@ -94,7 +92,7 @@ def scrape_all_pages(driver, names, prices, links):
         
         if next_btn.text == 'NEXT':
             driver.execute_script("arguments[0].click();", next_btn)
-            time.sleep(4)
+            time.sleep(2)
         else:
             break
 

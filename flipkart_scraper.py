@@ -1,4 +1,7 @@
 from functions import *
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
 
 product           = input('     What do you want to buy? : ')
 budget            = input(' What is your maximum budget? : ')
