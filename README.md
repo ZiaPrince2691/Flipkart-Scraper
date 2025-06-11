@@ -1,2 +1,2 @@
-# E-Commerce-Price-Tracker-Notifier
-It scrapes product prices from Flipkart and send an alert (email or Telegram) when a price drops below a certain amount.
+# Flipkart Scraper
+It takes the product name and budget from the user as input and saves all the products under budget in a CSV file.
