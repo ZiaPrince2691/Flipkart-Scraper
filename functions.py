@@ -4,7 +4,44 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
+from email.message import EmailMessage
+import smtplib
 import time
+
+SENDER = 'muhammadzia19285@gmail.com'
+PASSWORD = 'dvvc mwqh pfjn wmok'
+
+def send_email(sender, password, to, message):
+
+    subject = "Change in price of an item you were interested in."
+
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = to
+    msg.set_content(message)
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(sender, password)
+        smtp.send_message(msg)
+
+def get_new_price(url):
+    options = Options()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options)
+    driver.get(url)
+    new_price = int(driver.find_element(By.CLASS_NAME , 'Nx9bqj').text.replace('₹',''))
+    return new_price
+
+def monitor_item(url, old_price, sender, password, to):
+    new_price = get_new_price(url)
+    if new_price < old_price:
+        message = f'''
+            The price of the product you asked me to monitor has been decreased from ₹{old_price} to ₹{new_price}.
+            Check it out :-
+            {url}
+        '''
+        send_email(sender, password, to, message)
 
 def scrape_data_coloumn(products, names, prices, links):
     
